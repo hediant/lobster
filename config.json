@@ -1,0 +1,12 @@
+{
+	"db_conn" : {
+		"host" : "localhost",
+		"user" : "root",
+		"password" : "123456",
+		"database" : "lobster",
+		"connectionLimit" : 1,
+		"multipleStatements" : true 		
+	},
+	"port" :  8001,
+	"db_path" : "/home/lobster/data"
+}
