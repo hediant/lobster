@@ -8,6 +8,7 @@ var metrics = [
 	{
 		"name" : "metric1",
 		"desc" : "",
+		"ver" : 0,
 		"keys" : [
 			{
 				"name" : "tag1"
