@@ -1,2 +1,2 @@
 # lobster
-Time series data logging server
+A Time series data logging server
