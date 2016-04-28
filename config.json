@@ -8,5 +8,8 @@
 		"multipleStatements" : true 		
 	},
 	"port" :  8001,
-	"db_path" : "/home/lobster/data"
+	"db_path" : "/home/lobster/data",
+	"split" : "\t",
+	"max_write_buf" : 50000,
+	"flush_cycle" : 300000
 }
