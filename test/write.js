@@ -1,54 +1,10 @@
 var Writer = require('../lib/writer');
 var Topic = require('../lib/topic');
 var moment = require('moment');
+var Q = require('q');
+var Metric = require('../lib/metric');
 
-var metrics = [
-	{
-		"id" : 0,
-		"name" : "metric1",
-		"desc" : "",
-		"ver" : 0,
-		"keys" : [
-			{
-				"name" : "tag1"
-			},
-			{
-				"name" : "tag2"
-			},
-			{
-				"name" : "tag3"
-			}
-		]
-	},
-	{
-		"id" : 1,
-		"name" : "metric2",
-		"desc" : "",
-		"ver" : 0,
-		"keys" : [
-			{
-				"name" : "tag1",
-				"type" : "Number"
-			},
-			{
-				"name" : "tag2",
-				"type" : "Number"
-			},
-			{
-				"name" : "tag3",
-				"type" : "Number"
-			},
-			{
-				"name" : "tag4",
-				"type" : "Number"
-			},
-			{
-				"name" : "tag5",
-				"type" : "Number"
-			}
-		]
-	}
-];
+var metrics = [];
 
 var writer = new Writer();
 var topics = [];
@@ -59,11 +15,46 @@ function run (){
 		topics.push(new Topic("topic_" + i));
 	}
 
-	setInterval(function (){
-		var metric = Math.floor(Date.now() / 60000) % 2 ? metrics[0] : metrics[1];
-		//var metric = metrics[1];
-		doWrite(metric);
-	}, 1000);
+	Q.fcall(function (){
+		return Q.Promise(function (resolve, reject){
+			Metric.find({"name":"metric_test_1"}, function (err, results){
+				if (err){
+					reject(err);
+				}
+				else if(!results.length){
+					reject("metric_test_1 not exist.");
+				}
+				else{
+					metrics.push(results[0]);
+					resolve();
+				}
+			})
+		})
+	}).then(function (){
+		return Q.Promise(function (resolve, reject){
+			Metric.find({"name":"metric_test_2"}, function (err, results){
+				if (err){
+					reject(err);
+				}
+				else if(!results.length){
+					reject("metric_test_2 not exist.");
+				}				
+				else{
+					metrics.push(results[0]);
+					resolve();
+				}
+			})
+		})
+	}).then(function (){
+		setInterval(function (){
+			var metric = Math.floor(Date.now() / 60000) % 2 ? metrics[0] : metrics[1];
+			//var metric = metrics[1];
+			doWrite(metric);
+		}, 1000);		
+	}).catch(function (err){
+		console.log(err);
+		process.exit(1);
+	});
 }
 
 function doWrite (metric){
