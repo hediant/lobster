@@ -13,7 +13,7 @@ var writer = new Writer();
 
 function init (){
 	for (var i=0; i<topic_count; i++){
-		topics.push(new Topic("system_" + (i+1).toString()));
+		topics.push("system_" + (i+1).toString());
 	}
 }
 

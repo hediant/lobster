@@ -3,8 +3,15 @@ var Topic = require('../lib/topic');
 var moment = require('moment');
 var Q = require('q');
 var Metric = require('../lib/metric');
-
+var config = require('../config.json');
 var metrics = [];
+
+/*
+	set config for test reason
+*/
+config.max_write_buf = 100;
+config.flush_water_level = 30;
+config.flush_cycle = 5000;
 
 var writer = new Writer();
 var topics = [];
@@ -12,7 +19,7 @@ var topic_count = 10;
 
 function run (){
 	for (var i=1; i<=topic_count; i++ ){
-		topics.push(new Topic("topic_" + i));
+		topics.push("topic_" + i);
 	}
 
 	Q.fcall(function (){
