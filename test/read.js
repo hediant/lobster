@@ -593,3 +593,55 @@ describe("readRaw 27, read [] fields. backward", function(){
 		});	
 	});
 });
+
+describe("readRaw 28, with where func, 24 hours and limit", function(){
+	it("should without error", function(done){
+		var day = moment().format("YYYY-MM-DD");
+
+		var start = moment(day) - moment.duration(12, "hours");
+		var end = moment(day) + moment.duration(12, "hours");
+
+		var options = {
+			"where" : function (row){return row["tag_1"] < 10000;},
+			"limit" : 5
+		}
+		
+		console.log("Start:\t%s", moment(start).format("YYYY-MM-DD HH:mm:ss"));
+		console.log("End:\t%s", moment(end).format("YYYY-MM-DD HH:mm:ss"));
+
+		readRaw(start, end, options, function (err, data){
+			assert(!err == true);
+			data.forEach(function (row){
+				console.log(moment(row.__ts__).format("YYYY-MM-DD HH:mm:ss"), row["tag_1"])
+			})
+			console.log("data count:", data.length);
+			done();
+		})
+	});
+});
+
+describe("readRaw 29, with where func, 24 hours and limit, backward", function(){
+	it("should without error", function(done){
+		var day = moment().format("YYYY-MM-DD");
+
+		var end = moment(day) - moment.duration(12, "hours");
+		var start = moment(day) + moment.duration(12, "hours");
+
+		var options = {
+			"where" : function (row){return row["tag_1"] < 10000;},
+			"limit" : 5
+		}
+		
+		console.log("Start:\t%s", moment(start).format("YYYY-MM-DD HH:mm:ss"));
+		console.log("End:\t%s", moment(end).format("YYYY-MM-DD HH:mm:ss"));
+
+		readRaw(start, end, options, function (err, data){
+			assert(!err == true);
+			data.forEach(function (row){
+				console.log(moment(row.__ts__).format("YYYY-MM-DD HH:mm:ss"), row["tag_1"])
+			})
+			console.log("data count:", data.length);
+			done();
+		})
+	});
+});
