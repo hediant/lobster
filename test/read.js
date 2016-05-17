@@ -569,7 +569,7 @@ describe("readRaw 26, read all fields.", function(){
 });
 
 describe("readRaw 27, read [] fields. backward", function(){
-	it("should return should return empty data", function(done){
+	it("should return empty data", function(done){
 		var end = moment() - moment.duration(2, "days");
 		var start = moment().valueOf();
 		
