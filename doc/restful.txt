@@ -1,0 +1,69 @@
+////////////////////////////////////////////////////////
+// METRIC MANAGEMENT
+
+// CREATE METRIC
+POST http://{lobster}/metrics
+BODY {
+	"name" : "{metric_name}",
+	"desc" : "{description}",
+	"keys" : [
+		{
+			"name" : "{key_name}",
+			"type" : "Number"||"String"||"Digital"||"Analog"
+		},
+		...
+	]
+}
+
+// GET METRIC
+GET http://{lobster}/metrics/{metric_id}
+
+// SET METRIC
+PUT http://{lobster}/metrics/{metric_id}
+BODY {
+	"name" : "{metric_name}",
+	"desc" : "{description}",
+	"keys" : [
+		{
+			"name" : "{key_name}",
+			"type" : "Number"||"String"||"Digital"||"Analog"
+		},
+		...
+	]
+}
+
+// DROP METRIC
+DELETE http://{lobster}/metrics/{metric_id}
+
+// FIND METRICS
+GET http://{lobster}/metrics?
+[name={string}]
+[&desc={string}]
+[&limit={number}]
+[&sorts={string[-]}]
+[&calc_sum=true||false]
+
+////////////////////////////////////////////////////////
+// DATA STREAM
+
+// APPENDING DATA
+POST http://{lobster}/append
+BODY [
+	{
+		"topic" : "{topic_name}",
+		"metric" : "{metric_name}",
+		"data" : {object}
+	},
+	...
+]
+
+/////////////////////////////////////////////////////////
+// DATA QUERY
+
+// READ RAW DATA
+GET http://{lobster}/topics/{topic_name}/readraw?start={timestamp}
+[&end={timestamp}]
+[&limit={number}]
+[&tag={string}[&tag={string}]...]
+
+// READ AGGREGATION

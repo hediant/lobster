@@ -7,6 +7,8 @@ router.get('/', function(req, res, next) {
 });
 
 require("./metrics")(router);
+require("./write")(router);
+require("./read")(router);
 
 module.exports = router;
 

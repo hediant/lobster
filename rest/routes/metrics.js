@@ -1,42 +1,39 @@
-var express = require('express');
-var metric = require('../../lib/metric');
-var prepare_options = require('../utils/prepare_options');
+var prepare_options = require('../../utils/prepare_options');
+var response = require('./response');
+var global = require('../../global');
 
 module.exports = function (router){
-
-	var response = function (res, err, results){
-		res.json({
-			"err" : err,
-			"ret" : results
-		});
-	}
-
 	router.post('/metrics', function (req, res, next) {
-		metric.create(req.body, function (err, metric_id){
+		var app = global.getApp();
+		app.createMetric(req.body, function (err, metric_id){
 			response(res, err, metric_id);
 		});
 	});
 
 	router.get('/metrics', function (req, res, next){
-		metric.find(req.query, prepare_options(req.query), function (err, results){
+		var app = global.getApp();
+		app.findMetric(req.query, prepare_options(req.query), function (err, results){
 			response(res, err, results);
 		});
 	});
 
 	router.get('/metrics/:metric_id', function (req, res, next){
-		metric.get(req.params.metric_id, function (err, metric){
+		var app = global.getApp();
+		app.getMetric(req.params.metric_id, function (err, metric){
 			response(res, err, metric);
 		});
 	});
 
 	router.put('/metrics/:metric_id', function (req, res, next){
-		metric.set(req.params.metric_id, req.body, function (err){
+		var app = global.getApp();
+		app.setMetric(req.params.metric_id, req.body, function (err){
 			response(res, err);
 		});
 	});
 
 	router.delete('/metrics/:metric_id', function (req, res, next){
-		metric.drop(req.params.metric_id, function (err){
+		var app = global.getApp();
+		app.dropMetric(req.params.metric_id, function (err){
 			response(res, err);
 		});
 	});
