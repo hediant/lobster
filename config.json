@@ -11,7 +11,7 @@
 	"db_path" : "/home/lobster/data",
 	"delimiter" : "\t",
 	"max_write_buf" : 10000,
-	"flush_cycle" : 300000,
+	"flush_cycle" : 5000,
 	"flush_water_level" : 6000,
 	"concurrent_write" : 10,
 	"topic_cache" : 50000,
