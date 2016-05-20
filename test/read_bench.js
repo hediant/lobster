@@ -5,6 +5,7 @@ var Q = require('q');
 var day_range = 2;  // 7 days
 var parallel_count = 10;
 var interval = 30 * 1000;
+var system_count = 1000;
 
 var calcSum = function (obj){
 	var count = 0;
@@ -40,7 +41,7 @@ var ReadOne = function (topic_name){
 var doRead = function (){
 	var callbacks = [];
 	for (var i=0; i<parallel_count; i++){
-		var topic = "system_" + Math.floor(Math.random()*1000);
+		var topic = "system_" + Math.floor(Math.random()*system_count);
 		callbacks.push(ReadOne(topic));
 	}
 
