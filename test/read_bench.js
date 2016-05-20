@@ -6,6 +6,15 @@ var day_range = 2;  // 7 days
 var parallel_count = 10;
 var interval = 30 * 1000;
 
+var calcSum = function (obj){
+	var count = 0;
+	for (var key in obj){
+		count += obj[key].length;
+	}
+
+	return count;
+}
+
 var ReadOne = function (topic_name){
 	return Q.Promise(function (resolve, reject){
 		var reader = new Reader(topic_name);
@@ -21,7 +30,7 @@ var ReadOne = function (topic_name){
 				reject(err);
 			}
 			else {
-				console.log("Read %s, %s records, cost:%s ms.", topic_name, data.length, (end - start));
+				console.log("Read %s, %s records, cost:%s ms.", topic_name, calcSum(data), (end - start));
 				resolve();		
 			}
 		});	
