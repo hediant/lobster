@@ -1,7 +1,7 @@
 # lobster
 A Time series data logging server
 
-## Requirement: 
+### Requirement: 
 * ulimit -n <N>
 
 N >= 2.5 * topic numbers
