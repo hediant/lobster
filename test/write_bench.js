@@ -1,15 +1,13 @@
-var Writer = require('../lib/writer');
-var Topic = require('../lib/topic');
 var moment = require('moment');
 var Q = require('q');
 var Metric = require('../lib/metric');
+var G = require('../global');
 
 var topic_count = 1000;
 var rcd_per_hour = 60;
 
 var metric;
 var topics = [];
-var writer = new Writer();
 
 function init (){
 	for (var i=0; i<topic_count; i++){
@@ -26,7 +24,7 @@ function doWrite (){
 	});
 
 	topics.forEach(function (topic){
-		writer.append(topic, data, metric);
+		G.getApp().append(topic, metric.name, data);
 	});
 
 	console.log("[%s] Write %s topics(%s), %s records.", 
