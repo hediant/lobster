@@ -66,4 +66,19 @@ GET http://{lobster}/topics/{topic_name}/readraw?start={timestamp}
 [&limit={number}]
 [&tag={string}[&tag={string}]...]
 
+RETURN
+{
+	"err":null || reason,
+	"ret":{
+		"{tag_name}":[
+			[{timestamp}, {value}],
+			[{timestamp}, {value}],
+			[{timestamp}, {value}],
+			......
+		],
+		"{tag_name}":[...],
+		......
+	}
+}
+
 // READ AGGREGATION
