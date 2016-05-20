@@ -2,7 +2,7 @@
 A Time series data logging server
 
 ### Requirement: 
-* ulimit -n <N>
+* ulimit -n N
 
 N >= 2.5 * topic numbers
 
