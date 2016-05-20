@@ -13,7 +13,7 @@
 	"max_write_buf" : 300000,
 	"flush_cycle" : 300000,
 	"flush_water_level" : 200000,
-	"concurrent_write" : 10000,
+	"concurrent_write" : 5000,
 	"topic_cache" : 50000,
 	"debug" : true,
 	"diagnosis" : true
