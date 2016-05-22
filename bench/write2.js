@@ -93,31 +93,31 @@ function doWrite (){
 
 		if (ts - last_fast >= fast_interval){
 			if (dtags.fast.indexOf(tag_name) != -1){
-				fast.push[tag_name, Math.floor(Math.random()*10]
+				fast.push([tag_name, Math.floor(Math.random()*10)])
 			}
 
 			if (atags.fast.indexOf(tag_name) != -1){
-				fast.push[tag_name, (Math.random()*1000000).toFixed(2)]
+				fast.push([tag_name, (Math.random()*1000000).toFixed(2)])
 			}
 		}
 		
 		if (ts - last_slow >= slow_interval){
 			if (dtags.slow.indexOf(tag_name) != -1){
-				slow.push[tag_name, Math.floor(Math.random()*10]
+				slow.push([tag_name, Math.floor(Math.random()*10)])
 			}
 
 			if (atags.slow.indexOf(tag_name) != -1){
-				slow.push[tag_name, (Math.random()*1000000).toFixed(2)]
+				slow.push([tag_name, (Math.random()*1000000).toFixed(2)])
 			}
 		}
 
 		if (ts - last_very_slow >= very_slow_interval){
 			if (dtags.last_very_slow.indexOf(tag_name) != -1){
-				last_very_slow.push[tag_name, Math.floor(Math.random()*10]
+				last_very_slow.push([tag_name, Math.floor(Math.random()*10)])
 			}
 
 			if (atags.last_very_slow.indexOf(tag_name) != -1){
-				last_very_slow.push[tag_name, (Math.random()*1000000).toFixed(2)]
+				last_very_slow.push([tag_name, (Math.random()*1000000).toFixed(2)])
 			}
 		}		
 	});
