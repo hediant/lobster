@@ -147,7 +147,7 @@ function doWrite (){
 
 	if (!data_tag_count)
 		return;
-console.log(data)
+
 	topics.forEach(function (topic){
 		G.getApp().append(topic, metric.name, data);
 	});
@@ -162,7 +162,7 @@ console.log(data)
 function run (){
 	Q.fcall(function (){
 		return Q.Promise(function (resolve, reject){
-			Metric.find({"name":"metric_bench_1"}, function (err, results){
+			Metric.find({"name":"metric_bench_2"}, function (err, results){
 				if (err)
 					reject(err);
 				else if(!results.length){
