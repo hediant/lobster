@@ -3,8 +3,7 @@ var Metric = require('../lib/metric');
 var Q = require('q');
 var G = require('../global');
 
-var topic_count = 1000;
-var rcd_per_hour = 60;
+var topic_count = 1;
 
 var topics = [];
 var metric;
@@ -112,12 +111,12 @@ function doWrite (){
 		}
 
 		if (ts - last_very_slow >= very_slow_interval){
-			if (dtags.last_very_slow.indexOf(tag_name) != -1){
-				last_very_slow.push([tag_name, Math.floor(Math.random()*10)])
+			if (dtags.very_slow.indexOf(tag_name) != -1){
+				very_slow.push([tag_name, Math.floor(Math.random()*10)])
 			}
 
-			if (atags.last_very_slow.indexOf(tag_name) != -1){
-				last_very_slow.push([tag_name, (Math.random()*1000000).toFixed(2)])
+			if (atags.very_slow.indexOf(tag_name) != -1){
+				very_slow.push([tag_name, (Math.random()*1000000).toFixed(2)])
 			}
 		}		
 	});
@@ -148,7 +147,7 @@ function doWrite (){
 
 	if (!data_tag_count)
 		return;
-
+console.log(data)
 	topics.forEach(function (topic){
 		G.getApp().append(topic, metric.name, data);
 	});
