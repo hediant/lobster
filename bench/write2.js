@@ -43,11 +43,11 @@ function init (){
 			dtags.fast.push("d_" + (i+1).toString());
 		}
 
-		if (i<dtags.slow_count){
+		if (i>=dtags.fast_count && i<dtags.slow_count){
 			dtags.slow.push("d_" + (i+1).toString());
 		}
 
-		if (i<dtags.very_slow_count){
+		if (i>dtags.slow_count && i<dtags.very_slow_count){
 			dtags.very_slow.push("d_" + (i+1).toString());
 		}		
 	}
@@ -59,11 +59,11 @@ function init (){
 			atags.fast.push("a_" + (i+1).toString());
 		}
 
-		if (i<atags.slow_count){
+		if (i>=atags.fast_count && i<atags.slow_count){
 			atags.slow.push("a_" + (i+1).toString());
 		}
 
-		if (i<atags.very_slow_count){
+		if (i>=atags.slow_count && i<atags.very_slow_count){
 			atags.very_slow.push("a_" + (i+1).toString());
 		}		
 	}
@@ -148,7 +148,7 @@ function doWrite (){
 
 	if (!data_tag_count)
 		return;
-
+	
 	topics.forEach(function (topic){
 		G.getApp().append(topic, metric.name, data);
 	});
