@@ -28,7 +28,7 @@ var atags = {
 	"very_slow_count" : 50
 }
 
-var fast_interval = 10 * 1000;
+var fast_interval = 30 * 1000;
 var slow_interval = 60 * 1000;
 var very_slow_interval = 5 * 60 * 1000;
 
