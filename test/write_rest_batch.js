@@ -39,7 +39,6 @@ var doAppendBatch = function (){
 		url : base +"/append",
 		json : data
 	},function (err, res, body){
-		assert(null == err);
 		var end = Date.now();
 
 		console.log("[%s] Write %s topics, %s records, err:%s, cost:%s ms.", 

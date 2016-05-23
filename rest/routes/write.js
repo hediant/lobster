@@ -10,7 +10,7 @@ module.exports = function (router){
 	});
 
 	router.post("/topics/:topic_name/append", function (req, res, next){
-		g.getApp().append(req.params.topic_name, req.query.metric, req.body, function (err, results){
+		g.getApp().append(req.params.topic_name, req.body, req.query.metric, req.query.ts, function (err, results){
 			response(res, err, null);
 		});
 	})

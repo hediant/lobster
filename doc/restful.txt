@@ -58,6 +58,14 @@ BODY [
 	...
 ]
 
+POST http://{lobster}/topics/{topic_name}/append?metric={metric_name}&ts={timestamp}
+BODY
+{
+	"{tag_name}" : "{value}",
+	"{tag_name}" : "{value}",
+	... ...
+}
+
 /////////////////////////////////////////////////////////
 // DATA QUERY
 

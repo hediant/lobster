@@ -13,6 +13,8 @@ for (var i=0; i<topic_count; i++){
 	topics.push("topic_" + i);
 }
 
+topics.push("Invalid_topic_:::");
+
 var generateData = function (){
 	var ret = {};
 	for (var i=1; i<=tag_count; i++){
@@ -27,7 +29,7 @@ var append_ = function (topic_name, metric_name){
 	var start = Date.now();
 
 	request.post({
-		url : base +"/topics/" + topic_name + "/append?metric=" + metric_name,
+		url : base +"/topics/" + topic_name + "/append?metric=" + metric_name + "&ts=" + Date.now(),
 		json : data
 	},function (err, res, body){
 		assert(null == err);

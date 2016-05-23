@@ -149,7 +149,7 @@ function doWrite (){
 		return;
 
 	topics.forEach(function (topic){
-		G.getApp().append(topic, metric.name, data);
+		G.getApp().append(topic, data, metric.name, ts);
 	});
 
 	console.log("[%s] Write %s topics(%s), %s records.", 
