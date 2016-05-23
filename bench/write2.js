@@ -166,7 +166,7 @@ function run (){
 				if (err)
 					reject(err);
 				else if(!results.length){
-					reject("metric_bench_1 not exist.");
+					reject("metric_bench_2 not exist.");
 				}				
 				else{
 					metric = results[0];
