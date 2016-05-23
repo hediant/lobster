@@ -3,7 +3,7 @@ var Q = require('q');
 var Metric = require('../lib/metric');
 var G = require('../global');
 
-var topic_count = 1000;
+var topic_count = 50000;
 var rcd_per_hour = 60;
 
 var metric;
