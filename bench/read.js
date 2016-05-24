@@ -2,10 +2,11 @@ var Reader = require('../lib/reader');
 var moment = require('moment');
 var Q = require('q');
 
-var day_range = 2;  // 7 days
+var day_range = 6;  // 7 days
 var parallel_count = 10;
 var interval = 30 * 1000;
 var system_count = 1000;
+var field_names = ["a_1", "d_1", "a_11", "d_11", "a_100", "d_100"]
 
 var calcSum = function (obj){
 	var count = 0;
