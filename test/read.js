@@ -2,8 +2,11 @@ var Reader = require('../lib/reader');
 var moment = require('moment');
 var assert = require('assert');
 
-var topic_name = "system_100";
-var field_names = ["tag_1", "tag_2", "NOT_EXISTS"];
+var topic_name = "topic_1";
+var tag1 = "tag1";
+var tag2 = "tag2";
+
+var field_names = [tag1, tag2, "NOT_EXISTS"];
 
 var readRaw = function (start, end, options, cb){
 	var reader = new Reader(topic_name, field_names);
@@ -30,7 +33,7 @@ describe("readRaw 1", function(){
 
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err);
-			console.log(moment(data["tag_1"][0][0]).format("YYYY-MM-DD HH:mm:ss"));
+			console.log(moment(data[tag1][0][0]).format("YYYY-MM-DD HH:mm:ss"));
 			done();
 		})
 	});
@@ -46,9 +49,9 @@ describe("readRaw 2, backword", function(){
 
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err);
-			console.log(moment(data["tag_1"][1][0]).format("YYYY-MM-DD HH:mm:ss"));
-			console.log(moment(data["tag_1"][2][0]).format("YYYY-MM-DD HH:mm:ss"));
-			console.log(moment(data["tag_1"][3][0]).format("YYYY-MM-DD HH:mm:ss"));
+			console.log(moment(data[tag1][1][0]).format("YYYY-MM-DD HH:mm:ss"));
+			console.log(moment(data[tag1][2][0]).format("YYYY-MM-DD HH:mm:ss"));
+			console.log(moment(data[tag1][3][0]).format("YYYY-MM-DD HH:mm:ss"));
 			done();
 		})
 	});
@@ -64,7 +67,7 @@ describe("readRaw 3, start == end", function(){
 
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err);
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -80,10 +83,10 @@ describe("readRaw 4, 10 minutes", function(){
 
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -99,10 +102,10 @@ describe("readRaw 5, 10 minutes before 10 minutes", function(){
 
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err == true);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -118,10 +121,10 @@ describe("readRaw 6, 10 minutes, backward", function(){
 
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err == true);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -137,10 +140,10 @@ describe("readRaw 7, 10 minutes before 10 minutes, backward", function(){
 
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err == true);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -158,10 +161,10 @@ describe("readRaw 8, 10 minutes across the two days", function(){
 
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err == true);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -179,10 +182,10 @@ describe("readRaw 9, 10 minutes across the two day, backward", function(){
 
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err == true);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -200,10 +203,10 @@ describe("readRaw 10, last 10 minutes of yesterday", function(){
 
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err == true);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -221,10 +224,10 @@ describe("readRaw 11, last 10 minutes of yesterday, backward", function(){
 
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err == true);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -242,10 +245,10 @@ describe("readRaw 12, 10 minutes earlier today", function(){
 
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err == true);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -263,10 +266,10 @@ describe("readRaw 13, 10 minutes earlier today, backward", function(){
 
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err == true);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -280,7 +283,7 @@ describe("readRaw 14, with where func, 24 hours", function(){
 		var end = moment(day) + moment.duration(12, "hours");
 
 		var options = {
-			"where" : function (row){return row["tag_1"] < 10000;}
+			"where" : function (row){return row[tag1] < 10000;}
 		}
 		
 		console.log("Start:\t%s", moment(start).format("YYYY-MM-DD HH:mm:ss"));
@@ -288,10 +291,10 @@ describe("readRaw 14, with where func, 24 hours", function(){
 
 		readRaw(start, end, options, function (err, data){
 			assert(!err);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -305,7 +308,7 @@ describe("readRaw 15, with where func, 24 hours, backward", function(){
 		var start = moment(day) + moment.duration(12, "hours");
 
 		var options = {
-			"where" : function (row){return row["tag_1"] < 10000;}
+			"where" : function (row){return row[tag1] < 10000;}
 		}
 		
 		console.log("Start:\t%s", moment(start).format("YYYY-MM-DD HH:mm:ss"));
@@ -313,10 +316,10 @@ describe("readRaw 15, with where func, 24 hours, backward", function(){
 
 		readRaw(start, end, options, function (err, data){
 			assert(!err == true);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -338,10 +341,10 @@ describe("readRaw 16, limit, 24 hours", function(){
 
 		readRaw(start, end, options, function (err, data){
 			assert(!err == true);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -363,10 +366,10 @@ describe("readRaw 17, limit, 24 hours, backward", function(){
 
 		readRaw(start, end, options, function (err, data){
 			assert(!err == true);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -382,7 +385,7 @@ describe("readRaw 18, read a week", function(){
 
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err == true);
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -398,7 +401,7 @@ describe("readRaw 19, read a week, backward", function(){
 
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err == true);
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -585,7 +588,7 @@ describe("readRaw 28, with where func, 24 hours and limit", function(){
 		var end = moment(day) + moment.duration(12, "hours");
 
 		var options = {
-			"where" : function (row){return row["tag_1"] < 10000;},
+			"where" : function (row){return row[tag1] < 10000;},
 			"limit" : 5
 		}
 		
@@ -594,10 +597,10 @@ describe("readRaw 28, with where func, 24 hours and limit", function(){
 
 		readRaw(start, end, options, function (err, data){
 			assert(!err == true);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"), row[1])
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
@@ -611,7 +614,7 @@ describe("readRaw 29, with where func, 24 hours and limit, backward", function()
 		var start = moment(day) + moment.duration(12, "hours");
 
 		var options = {
-			"where" : function (row){return row["tag_1"] < 10000;},
+			"where" : function (row){return row[tag1] < 10000;},
 			"limit" : 5
 		}
 		
@@ -620,10 +623,10 @@ describe("readRaw 29, with where func, 24 hours and limit, backward", function()
 
 		readRaw(start, end, options, function (err, data){
 			assert(!err == true);
-			data["tag_1"].forEach(function (row){
+			data[tag1].forEach(function (row){
 				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"), row[1])
 			})
-			console.log("data count:", data["tag_1"].length);
+			console.log("data count:", data[tag1].length);
 			done();
 		})
 	});
