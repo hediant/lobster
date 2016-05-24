@@ -8,6 +8,7 @@
 		"multipleStatements" : true 		
 	},
 	"port" :  8001,
+	"dup_read_port" : 8002,
 	"db_path" : "/home/lobster/data",
 	"separator" : "\t",
 	"max_write_buf" : 1000000,

@@ -1,0 +1,36 @@
+{
+	"apps" : [
+		{
+			"name" : "main",
+			"script" : "../rest/bin/main.js",
+			"watch" : true,
+			"error_file" : "../logs/main-error.log",
+			"out_file" : "/dev/null", 
+			"max_restarts" : 10,
+			"max_memory_restart" : "3G",
+			"instances" : 1,
+			"env": {
+				"NODE_ENV": "development",
+			},
+			"env_production" : {
+				"NODE_ENV": "production"
+			}
+		},
+		{
+			"name" : "dup-read",
+			"script" : "../rest/bin/dup_read.js",
+			"watch" : true,
+			"error_file" : "../logs/dup-read-error.log",
+			"out_file" : "/dev/null", 
+			"max_restarts" : 10,
+			"max_memory_restart" : "2G",
+			"instances" : 4,
+			"env": {
+				"NODE_ENV": "development",
+			},
+			"env_production" : {
+				"NODE_ENV": "production"
+			}			
+		}
+	]
+}

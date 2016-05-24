@@ -3,6 +3,7 @@
 /**
  * Module dependencies.
  */
+var config = require('../../config');
 
 var app = require('../app');
 var debug = require('debug')('rest:server');
@@ -12,7 +13,7 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(config.port || '8001');
 app.set('port', port);
 
 /**
@@ -86,5 +87,12 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+
+  console.log("===================================================");
+  console.log("Welcome to lobster!");
+  console.log("Lobster is A Time series logging server.");
+  console.log("===================================================");
+  console.log('PID %s.', process.pid);
+  console.log('Server listening on %s.', bind);
+  console.log('Ready.');
 }

@@ -7,6 +7,14 @@ var App = require('./lib/app');
 exports.DbConnection = mysql.createPool(config.db_conn);
 
 //
+// Environments
+//
+exports.Env = {
+	// main || duplicate
+	"mode" : "main"
+}
+
+//
 // Application Instance
 //
 var app_ = new App();
