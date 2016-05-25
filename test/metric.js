@@ -98,7 +98,7 @@ describe("create metric 2", function(){
 describe("get metric 0", function(){
 	it("should without error", function(done){
 		request.get({
-			url : base +"/metrics/" + metrics[0].id
+			url : base +"/metrics/" + metrics[0].name
 		},function (err, res, body){
 			assert(null == err);
 			console.log(body);
@@ -111,7 +111,7 @@ describe("get metric 0", function(){
 describe("get metric 1", function(){
 	it("should without error", function(done){
 		request.get({
-			url : base +"/metrics/" + metrics[1].id
+			url : base +"/metrics/" + metrics[1].name
 		},function (err, res, body){
 			assert(null == err);
 			console.log(body);
@@ -124,7 +124,7 @@ describe("get metric 1", function(){
 describe("get metric 2", function(){
 	it("should without error", function(done){
 		request.get({
-			url : base +"/metrics/" + metrics[2].id
+			url : base +"/metrics/" + metrics[2].name
 		},function (err, res, body){
 			assert(null == err);
 			console.log(body);
@@ -137,7 +137,7 @@ describe("get metric 2", function(){
 describe("set metric 2", function(){
 	it("should without error", function(done){
 		request.put({
-			url : base +"/metrics/" + metrics[2].id,
+			url : base +"/metrics/" + metrics[2].name,
 			json : {
 				"keys" : [
 					{
@@ -158,7 +158,7 @@ describe("set metric 2", function(){
 describe("get metric 2", function(){
 	it("should without error", function(done){
 		request.get({
-			url : base +"/metrics/" + metrics[2].id
+			url : base +"/metrics/" + metrics[2].name
 		},function (err, res, body){
 			assert(null == err);
 			console.log(body);
@@ -184,7 +184,7 @@ describe("find metric", function(){
 describe("delete metric 0", function(){
 	it("should without error", function(done){
 		request.del({
-			url : base +"/metrics/" + metrics[0].id
+			url : base +"/metrics/" + metrics[0].name
 		},function (err, res, body){
 			assert(null == err);
 			console.log(body);
@@ -197,7 +197,7 @@ describe("delete metric 0", function(){
 describe("delete metric 1", function(){
 	it("should without error", function(done){
 		request.del({
-			url : base +"/metrics/" + metrics[1].id
+			url : base +"/metrics/" + metrics[1].name
 		},function (err, res, body){
 			assert(null == err);
 			console.log(body);
@@ -210,7 +210,7 @@ describe("delete metric 1", function(){
 describe("delete metric 2", function(){
 	it("should without error", function(done){
 		request.del({
-			url : base +"/metrics/" + metrics[2].id
+			url : base +"/metrics/" + metrics[2].name
 		},function (err, res, body){
 			assert(null == err);
 			console.log(body);

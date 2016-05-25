@@ -16,10 +16,10 @@ BODY {
 }
 
 // GET METRIC
-GET http://{lobster}/metrics/{metric_id}
+GET http://{lobster}/metrics/{metric_name}
 
 // SET METRIC
-PUT http://{lobster}/metrics/{metric_id}
+PUT http://{lobster}/metrics/{metric_name}
 BODY {
 	"name" : "{metric_name}",
 	"desc" : "{description}",
@@ -33,7 +33,7 @@ BODY {
 }
 
 // DROP METRIC
-DELETE http://{lobster}/metrics/{metric_id}
+DELETE http://{lobster}/metrics/{metric_name}
 
 // FIND METRICS
 GET http://{lobster}/metrics?

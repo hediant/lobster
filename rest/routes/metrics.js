@@ -17,23 +17,23 @@ module.exports = function (router){
 		});
 	});
 
-	router.get('/metrics/:metric_id', function (req, res, next){
+	router.get('/metrics/:metric_name', function (req, res, next){
 		var app = G.getApp();
-		app.getMetric(req.params.metric_id, function (err, metric){
+		app.getMetricByName(req.params.metric_name, function (err, metric){
 			response(res, err, metric);
 		});
 	});
 
-	router.put('/metrics/:metric_id', function (req, res, next){
+	router.put('/metrics/:metric_name', function (req, res, next){
 		var app = G.getApp();
-		app.setMetric(req.params.metric_id, req.body, function (err){
+		app.setMetricByName(req.params.metric_name, req.body, function (err){
 			response(res, err);
 		});
 	});
 
-	router.delete('/metrics/:metric_id', function (req, res, next){
+	router.delete('/metrics/:metric_name', function (req, res, next){
 		var app = G.getApp();
-		app.dropMetric(req.params.metric_id, function (err){
+		app.dropMetricByName(req.params.metric_name, function (err){
 			response(res, err);
 		});
 	});
