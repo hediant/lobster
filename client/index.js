@@ -71,7 +71,7 @@ function Client(options){
 			"json" : metric
 		}, function (err, res, body){
 			if (err)
-				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
+				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE", err.message));			
 			if (!responseStatus_(res, cb))
 				return;
 				
@@ -88,7 +88,7 @@ function Client(options){
 			"url" : url.format(host_ + "/metrics/" + metric_name)
 		}, function (err, res, body){
 			if (err)
-				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
+				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE", err.message));			
 			if (!responseStatus_(res, cb))
 				return;
 				
@@ -118,7 +118,7 @@ function Client(options){
 			"json" : metric
 		}, function (err, res, body){
 			if (err)
-				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
+				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE", err.message));			
 			if (!responseStatus_(res, cb))
 				return;		
 
@@ -135,7 +135,7 @@ function Client(options){
 			"url" : url.format(host_ + "/metrics/" + metric_name)
 		}, function (err, res, body){
 			if (err)
-				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
+				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE", err.message));			
 			if (!responseStatus_(res, cb))
 				return;		
 
@@ -163,7 +163,7 @@ function Client(options){
 			"url" : url.format(host_ + "/metrics?" + qs.stringify(query))
 		}, function (err, res, body){
 			if (err)
-				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
+				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE", err.message));			
 			if (!responseStatus_(res, cb))
 				return;
 				
@@ -197,7 +197,7 @@ function Client(options){
 			"json" : queue
 		}, function (err, res, body){
 			if (err)
-				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
+				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE", err.message));			
 			if (!responseStatus_(res, cb))
 				return;
 				
@@ -246,7 +246,7 @@ function Client(options){
 			"url" : url.format(host + "/topics/" + topic_name + "/readraw?" + qs.stringify(query_obj))
 		}, function (err, res, body){
 			if (err)
-				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
+				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE", err.message));			
 			if (!responseStatus_(res, cb))
 				return;
 				
