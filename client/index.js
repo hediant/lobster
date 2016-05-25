@@ -71,8 +71,8 @@ function Client(options){
 			"json" : metric
 		}, function (err, res, body){
 			if (err)
-				cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
-			else if (!responseStatus_(res, cb))
+				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
+			if (!responseStatus_(res, cb))
 				return;
 				
 			handelBody_(body, cb);	
@@ -88,8 +88,8 @@ function Client(options){
 			"url" : url.format(host_ + "/metrics/" + metric_name)
 		}, function (err, res, body){
 			if (err)
-				cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
-			else if (!responseStatus_(res, cb))
+				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
+			if (!responseStatus_(res, cb))
 				return;
 				
 			handelBody_(JSON.parse(body), cb);
@@ -118,9 +118,9 @@ function Client(options){
 			"json" : metric
 		}, function (err, res, body){
 			if (err)
-				cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
-			else if (!responseStatus_(res, cb))
-				return;			
+				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
+			if (!responseStatus_(res, cb))
+				return;		
 
 			cb && cb(body.err? errorMsg_(body.err) : null);			
 		});
@@ -135,9 +135,9 @@ function Client(options){
 			"url" : url.format(host_ + "/metrics/" + metric_name)
 		}, function (err, res, body){
 			if (err)
-				cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
-			else if (!responseStatus_(res, cb))
-				return;			
+				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
+			if (!responseStatus_(res, cb))
+				return;		
 
 			cb && cb(body.err? errorMsg_(body.err) : null);			
 		});		
@@ -163,8 +163,8 @@ function Client(options){
 			"url" : url.format(host_ + "/metrics?" + qs.stringify(query))
 		}, function (err, res, body){
 			if (err)
-				cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
-			else if (!responseStatus_(res, cb))
+				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
+			if (!responseStatus_(res, cb))
 				return;
 				
 			handelBody_(JSON.parse(body), cb);
@@ -197,8 +197,8 @@ function Client(options){
 			"json" : queue
 		}, function (err, res, body){
 			if (err)
-				cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
-			else if (!responseStatus_(res, cb))
+				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
+			if (!responseStatus_(res, cb))
 				return;
 				
 			handelBody_(body, cb);
@@ -233,12 +233,21 @@ function Client(options){
 	*/
 	this.readRaw = function (topic_name, query, cb){
 		var host = dup_ ? dup_ : host_;
+		var query_obj = {}
+		for (var key in query){
+			if (key == "fields"){
+				query_obj["tag"] = query["fields"]
+			}
+			else
+				query_obj[key] = query[key];
+		}
+
 		request.get({
-			"url" : url.format(host + "/topics/" + topic_name + "/readraw?" + qs.stringify(query))
+			"url" : url.format(host + "/topics/" + topic_name + "/readraw?" + qs.stringify(query_obj))
 		}, function (err, res, body){
 			if (err)
-				cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
-			else if (!responseStatus_(res, cb))
+				return cb && cb(errorMsg_("ER_SERVICE_NOT_AVAILABLE"));			
+			if (!responseStatus_(res, cb))
 				return;
 				
 			handelBody_(JSON.parse(body), cb);
