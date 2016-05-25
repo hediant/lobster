@@ -10,6 +10,15 @@ var field_names = [tag1, tag2, "NOT_EXISTS"];
 
 var client = new Client();
 
+var calcRecords_ = function (data){
+	var count = 0;
+	for (var key in data){
+		count += data[key].length;
+	}
+
+	return count;
+}
+
 var readRaw = function (start, end, options, cb){
 	var t1 = Date.now();
 	var query = {
@@ -303,10 +312,7 @@ describe("readRaw 14, limit, 24 hours", function(){
 
 		readRaw(start, end, options, function (err, data){
 			assert(!err == true);
-			data[tag1].forEach(function (row){
-				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
-			})
-			console.log("data count:", data[tag1].length);
+			assert(calcRecords_(data)<=10)
 			done();
 		})
 	});
@@ -328,10 +334,7 @@ describe("readRaw 15, limit, 24 hours, backward", function(){
 
 		readRaw(start, end, options, function (err, data){
 			assert(!err == true);
-			data[tag1].forEach(function (row){
-				console.log(moment(row[0]).format("YYYY-MM-DD HH:mm:ss"))
-			})
-			console.log("data count:", data[tag1].length);
+			assert(calcRecords_(data)<=10)
 			done();
 		})
 	});
@@ -589,5 +592,36 @@ describe("readRaw 26, read all fields. pipeline", function(){
 		var stream = client.readRawStream(topic_name, query);
 		stream.on('end', done);
 		stream.pipe(process.stdout);
+	});
+});
+
+describe("readRaw 27, read all fields. pipeline events", function(){
+	it("should return all fields data", function(done){
+		var start = moment() - moment.duration(2, "days");
+		var end = moment().valueOf();
+		
+		console.log("Start:\t%s", moment(start).format("YYYY-MM-DD HH:mm:ss"));
+		console.log("End:\t%s", moment(end).format("YYYY-MM-DD HH:mm:ss"));
+
+		var t1 = Date.now();
+		var query = {
+			"start" : start,
+			"end" : end,
+			"limit" : 10
+		}
+
+		var data = "";
+		var stream = client.readRawStream(topic_name, query);
+		stream.on('end', function (){
+			assert(calcRecords_(JSON.parse(data).ret) <= 10);
+			done();
+		});
+		stream.on('data', function (trunk){
+			data += trunk.toString();
+		});
+		stream.on('error', function (err){
+			console.log(err);
+			done();
+		})
 	});
 });
