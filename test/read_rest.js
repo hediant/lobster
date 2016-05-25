@@ -339,8 +339,8 @@ describe("readRaw 15, limit, 24 hours, backward", function(){
 
 describe("readRaw 16, read a week", function(){
 	it("should without error", function(done){
-		var start = moment() - moment.duration(1, "weeks");
 		var end = moment().valueOf();
+		var start = moment() - moment.duration(1, "weeks");		
 		
 		console.log("Start:\t%s", moment(start).format("YYYY-MM-DD HH:mm:ss"));
 		console.log("End:\t%s", moment(end).format("YYYY-MM-DD HH:mm:ss"));
@@ -355,8 +355,8 @@ describe("readRaw 16, read a week", function(){
 
 describe("readRaw 17, read a week, backward", function(){
 	it("should without error", function(done){
-		var end = moment() - moment.duration(1, "weeks");
 		var start = moment().valueOf();
+		var end = moment() - moment.duration(1, "weeks");
 		
 		console.log("Start:\t%s", moment(start).format("YYYY-MM-DD HH:mm:ss"));
 		console.log("End:\t%s", moment(end).format("YYYY-MM-DD HH:mm:ss"));
@@ -568,5 +568,26 @@ describe("readRaw 25, read bad end time.", function(){
 			assert(err && err.code == "ER_INVALID_END_TIME")
 			done();
 		});	
+	});
+});
+
+describe("readRaw 26, read all fields. pipeline", function(){
+	it("should return all fields data", function(done){
+		var start = moment() - moment.duration(2, "days");
+		var end = moment().valueOf();
+		
+		console.log("Start:\t%s", moment(start).format("YYYY-MM-DD HH:mm:ss"));
+		console.log("End:\t%s", moment(end).format("YYYY-MM-DD HH:mm:ss"));
+
+		var t1 = Date.now();
+		var query = {
+			"start" : start,
+			"end" : end,
+			"limit" : 10
+		}
+
+		var stream = client.readRawStream(topic_name, query);
+		stream.on('end', done);
+		stream.pipe(process.stdout);
 	});
 });
