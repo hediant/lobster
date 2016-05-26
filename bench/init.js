@@ -60,6 +60,12 @@ var metrics = [
 		"desc" : "",
 		"ver" : 0,
 		"keys" : []
+	},
+	{
+		"name" : "metric_bench_3",
+		"desc" : "",
+		"ver" : 0,
+		"keys" : []
 	}	
 ];
 
@@ -83,6 +89,20 @@ function init(){
 			"type" : "Analog"
 		})
 	}
+
+	for (var i=0; i<25; i++){
+		metrics[4].keys.push({
+			"name" : "a_" + (i+1).toString(),
+			"type" : "Analog"
+		})
+	}	
+
+	for (var i=0; i<25; i++){
+		metrics[4].keys.push({
+			"name" : "d_" + (i+1).toString(),
+			"type" : "Digital"
+		});
+	}	
 }
 init();
 
@@ -117,6 +137,15 @@ describe("create " + metrics[2].name, function(){
 describe("create " + metrics[3].name, function(){
 	it("should without error", function(done){
 		Metric.create(metrics[3], function (err){
+			assert(!err || err == "ER_METRIC_EXIST");
+			done();
+		})
+	});
+});
+
+describe("create " + metrics[4].name, function(){
+	it("should without error", function(done){
+		Metric.create(metrics[4], function (err){
 			assert(!err || err == "ER_METRIC_EXIST");
 			done();
 		})
