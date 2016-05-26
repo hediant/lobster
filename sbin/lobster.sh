@@ -9,10 +9,10 @@ case "$1" in
     echo $APPJSON | pm2 start -
     ;;
   stop)
-    pm2 stop all
+    echo $APPJSON | pm2 stop -
     ;;
   restart)
-    pm2 restart all
+    echo $APPJSON | pm2 restart -
     ;;
   *)
   echo "Usage: sbin/lobster.sh {start|stop|restart}"
