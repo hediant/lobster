@@ -18,6 +18,12 @@ exports.Env = {
 // Application Instance
 //
 var app_ = new App();
+
+//
+// initialize and hook process.exit events
+//
+app_.init();
+
 exports.getApp = function (){
 	return app_;
 }

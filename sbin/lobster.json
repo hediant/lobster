@@ -3,12 +3,13 @@
 		{
 			"name" : "main",
 			"script" : "../rest/bin/main.js",
-			"watch" : true,
+			"watch" : false,
 			"error_file" : "../logs/main-error.log",
 			"out_file" : "/dev/null", 
 			"max_restarts" : 10,
 			"max_memory_restart" : "3G",
 			"instances" : 1,
+			"kill_timeout" : 30000,
 			"env": {
 				"NODE_ENV": "development",
 			},
@@ -19,7 +20,7 @@
 		{
 			"name" : "dup-read",
 			"script" : "../rest/bin/dup_read.js",
-			"watch" : true,
+			"watch" : false,
 			"error_file" : "../logs/dup-read-error.log",
 			"out_file" : "/dev/null", 
 			"max_restarts" : 10,
