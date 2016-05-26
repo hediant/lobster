@@ -20,9 +20,11 @@ var doRead = function (start, forward, cb){
 				data = yield cursor.next();
 			}
 
+			cursor.close();
 			return cb(null, results);
 
 		}).catch(function (err){
+			cursor.close();
 			return cb(err);
 		});
 	});	
