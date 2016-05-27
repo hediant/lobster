@@ -1,6 +1,15 @@
 var Aggregation = require("../lib/aggregation");
 
-Aggregation("topic_1", 0, Date.now(), function (err, results){
-	console.log(err);
-	console.log(results);
-})
+var topic_name = "system_100";
+
+var st = Date.now();
+Aggregation(topic_name, 0, Date.now(), function (err, results){
+	var ed = Date.now();
+	console.log("Aggregation %s, cost:%s ms, err:%s.",
+		topic_name,
+		(ed - st),
+		err);
+	if (results){
+		console.log(Object.keys(results));
+	}
+});
