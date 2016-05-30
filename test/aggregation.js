@@ -1,6 +1,6 @@
 var Aggregation = require("../lib/aggregation");
 
-var topic_name = "system_100";
+var topic_name = "topic_1";
 
 var st = Date.now();
 Aggregation(topic_name, 0, Date.now(), function (err, results){
