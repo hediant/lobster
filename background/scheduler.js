@@ -22,6 +22,10 @@ function Scheduler(queue){
 	}
 
 	this.run = function (){
+		if (!queue || !queue.size()){
+			return me.emit('completed');
+		}
+
 		var parallel = 0;
 		var worker = queue.next();
 
