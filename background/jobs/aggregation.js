@@ -5,13 +5,15 @@ var config = require('../../config')
 	, Q = require('q')
 	, Aggregation = require('../../lib/aggregation');
 
-function Task(topic_name){
+function AggrJob(topic_name){
 	var me = this;
 	var aggr_path_ = path.join(config.db_path, topic_name, "aggregation");
 
 	var start_ = 0;
 	// beginning of current day
 	var end_ = moment(0, "HH").valueOf();
+
+	var no_need_complite_ = false;
 
 	this.getName = function (){
 		return topic_name;
@@ -38,8 +40,13 @@ function Task(topic_name){
 		return Q.Promise((resolve, reject) => {
 			Aggregation(topic_name, start_, end_, (err) => {
 				if (err){
-					if (err == "ER_TOPIC_NOT_EXIST")
+					if (err == "ER_TOPIC_NOT_EXIST"){
+						no_need_complite_ = true;
 						resolve();
+					}
+					else if (err == "ER_NO_DATA"){
+						resolve();
+					}
 					else
 						reject(err)
 				}
@@ -51,6 +58,9 @@ function Task(topic_name){
 
 	this.onComplited = function (){
 		return Q.Promise((resolve, reject) => {
+			if (no_need_complite_)
+				return resolve();
+
 			var last = moment(end_).format('YYYYMMDD');
 			fs.writeFile(aggr_path_, last, (err) => {
 				if (err)
@@ -65,15 +75,15 @@ function Task(topic_name){
 //
 // @cb - function (err, tasks)
 //
-Task.fetch = function (){
+AggrJob.fetch = function (){
 	var topics = fs.readdirSync(config.db_path);
 	var tasks = new Array(topics.length);
 
 	topics.forEach(function (topic_name, idx){
-		tasks[idx] = new Task(topic_name);
+		tasks[idx] = new AggrJob(topic_name);
 	});
 
 	return tasks;
 }
 
-module.exports = Task;
+module.exports = AggrJob;
