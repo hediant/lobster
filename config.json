@@ -16,6 +16,10 @@
 	"flush_water_level" : 600000,
 	"concurrent_write" : 10000,
 	"topic_cache" : 50000,
+	"aggregation" : {
+		"parallel_jobs" : 2,
+		"max_retry_times" : 3
+	},
 	"debug" : true,
 	"diagnosis" : true
 }

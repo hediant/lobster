@@ -1,0 +1,72 @@
+var config = require('../../config')
+	, path = require('path')
+	, fs = require('fs')
+	, moment = require('moment')
+	, Q = require('q')
+	, Aggregation = require('../../lib/aggregation');
+
+function Task(topic_name){
+	var me = this;
+	var aggr_path_ = path.join(config.db_path, topic_name, "aggregation");
+
+	var start_ = 0;
+	// beginning of current day
+	var end_ = moment(0, "HH").valueOf();
+
+	this.getName = function (){
+		return topic_name;
+	}
+
+	this.initialize = function (){
+		return Q.Promise((resolve, reject) => {
+			fs.readFile(aggr_path_, function (err, data){
+				if (err){
+					if (err.code == "ENOENT")
+						resolve();
+					else
+						reject(err);
+				}
+				else{
+					start_ = moment(data.toString()).valueOf();
+					resolve();
+				}
+			});				
+		})
+	}
+
+	this.doWork = function (){
+		return Q.Promise((resolve, reject) => {
+			Aggregation(topic_name, start_, end_, (err) => {
+				err ? reject(err) : resolve();
+			});			
+		})
+	}
+
+	this.onComplited = function (){
+		return Q.Promise((resolve, reject) => {
+			var last = moment(end_).format('YYYYMMDD');
+			fs.writeFile(aggr_path_, last, (err) => {
+				if (err)
+					reject(err);
+				else
+					resolve();
+			});			
+		})
+	}
+}
+
+//
+// @cb - function (err, tasks)
+//
+Task.fetch = function (){
+	var topics = fs.readdirSync(config.db_path);
+	var tasks = new Array(topics.length);
+
+	topics.forEach(function (topic_name, idx){
+		tasks[idx] = new Task(topic_name);
+	});
+
+	return tasks;
+}
+
+module.exports = Task;
