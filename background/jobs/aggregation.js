@@ -13,7 +13,7 @@ function AggrJob(topic_name){
 	// beginning of current day
 	var end_ = moment(0, "HH").valueOf();
 
-	var no_need_complite_ = false;
+	var do_not_save_last_flag_ = false;
 
 	this.getName = function (){
 		return topic_name;
@@ -41,7 +41,7 @@ function AggrJob(topic_name){
 			Aggregation(topic_name, start_, end_, (err) => {
 				if (err){
 					if (err == "ER_TOPIC_NOT_EXIST"){
-						no_need_complite_ = true;
+						do_not_save_last_flag_ = true;
 						resolve();
 					}
 					else if (err == "ER_NO_DATA"){
@@ -58,7 +58,7 @@ function AggrJob(topic_name){
 
 	this.onComplited = function (){
 		return Q.Promise((resolve, reject) => {
-			if (no_need_complite_)
+			if (do_not_save_last_flag_)
 				return resolve();
 
 			var last = moment(end_).format('YYYYMMDD');
