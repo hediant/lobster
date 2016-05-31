@@ -8,6 +8,7 @@ function Worker(job, options){
 
 	// error to retry times
 	var retry_ = 0;
+	var init_ = false;
 
 	this.addRetryTimes = function (){
 		retry_ ++;
@@ -16,13 +17,17 @@ function Worker(job, options){
 	this.getRetryTimes = function (){
 		return retry_;
 	}
-	
+
 	this.work = function (){
 		co(function *(){
-			if (job.initialize && !retry_)
+			if (!init_ && job.initialize){
 				yield job.initialize();
+				init_ = true;
+			}
+
 			if (job.doWork)
 				yield job.doWork();
+			
 			if (job.onComplited)
 				yield job.onComplited();
 

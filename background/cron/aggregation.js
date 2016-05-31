@@ -19,6 +19,7 @@ var doAggregateJob = function (){
 	var sdlr = new Scheduler(queue);
 	sdlr.on('completed', function (){
 		var end = Date.now();
+		console.log("===============================================");
 		console.log("All task completed! cost:%s.", moment.duration((end - start)).humanize());
 		console.log("** %s **", moment().format("YYYY-MM-DD HH:mm:ss"));
 		console.log("");
