@@ -6,6 +6,8 @@ A Time series data logging server
 
 N >= 2.5 * topic numbers
 
-* Nodejs 0.12.x or upper
+* Nodejs 0.12.x or upper, ES6 support.
+
+* alias node='node --harmony'
 
 * PM2 1.1.3+
