@@ -37,7 +37,14 @@ function Task(topic_name){
 	this.doWork = function (){
 		return Q.Promise((resolve, reject) => {
 			Aggregation(topic_name, start_, end_, (err) => {
-				err ? reject(err) : resolve();
+				if (err){
+					if (err == "ER_TOPIC_NOT_EXIST")
+						resolve();
+					else
+						reject(err)
+				}
+				else
+					resolve();
 			});			
 		})
 	}
