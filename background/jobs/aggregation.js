@@ -43,14 +43,17 @@ function AggrJob(topic_name){
 			co(function *(){
 				var t1 = Date.now();
 				var aggr = yield Aggregation(topic_name, start_, end_);
+
+				var t2 = Date.now();
 				var writer = new AggrWriter(topic_name);
 				yield writer.save(aggr);
 
-				var t2 = Date.now();
+				var t3 = Date.now();
 				if (config.debug){
-					console.log("Aggregate %s, total cost:%s ms.", 
-						topic_name, 
-						(t2 - t1));
+					console.log("Aggregate %s ms, write:%s ms, total:%s ms.", 
+						(t2 - t1), 
+						(t3 - t2),
+						(t3 - t1));
 				}				
 
 				resolve();

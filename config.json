@@ -23,6 +23,7 @@
 		"parallel_jobs" : 1,
 		"max_retry_times" : 3
 	},
+	"time_zone" : "Asia/Beijing",
 	"debug" : true,
 	"diagnosis" : true
 }

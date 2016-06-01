@@ -13,7 +13,8 @@ switch (G.Env.mode){
 		require("./write")(router);
 	case "duplicate":
 	default:
-		require("./read")(router);		
+		require("./read")(router);
+		require('./aggregation')(router);		
 }
 
 module.exports = router;
