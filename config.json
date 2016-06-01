@@ -7,6 +7,9 @@
 		"connectionLimit" : 1,
 		"multipleStatements" : true 		
 	},
+	"mongodb" : {
+		"url" : "mongodb://localhost:27017/lobster"
+	},
 	"port" :  8001,
 	"dup_read_port" : 8002,
 	"db_path" : "/home/lobster/data",
@@ -17,7 +20,7 @@
 	"concurrent_write" : 10000,
 	"topic_cache" : 50000,
 	"aggregation" : {
-		"parallel_jobs" : 2,
+		"parallel_jobs" : 1,
 		"max_retry_times" : 3
 	},
 	"debug" : true,

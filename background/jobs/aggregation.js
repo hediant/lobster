@@ -3,7 +3,9 @@ var config = require('../../config')
 	, fs = require('fs')
 	, moment = require('moment')
 	, Q = require('q')
-	, Aggregation = require('../../lib/aggregation');
+	, Aggregation = require('../../lib/aggregation')
+	, AggrWriter = require('../../lib/aggr_writer')
+	, co = require('co');
 
 function AggrJob(topic_name){
 	var me = this;
@@ -38,22 +40,33 @@ function AggrJob(topic_name){
 
 	this.doWork = function (){
 		return Q.Promise((resolve, reject) => {
-			Aggregation(topic_name, start_, end_, (err) => {
-				if (err){
-					if (err == "ER_TOPIC_NOT_EXIST"){
-						do_not_save_last_flag_ = true;
-						resolve();
-					}
-					else if (err == "ER_NO_DATA"){
-						resolve();
-					}
-					else
-						reject(err)
+			co(function *(){
+				var t1 = Date.now();
+				var aggr = yield Aggregation(topic_name, start_, end_);
+				var writer = new AggrWriter(topic_name);
+				yield writer.save(aggr);
+
+				var t2 = Date.now();
+				if (config.debug){
+					console.log("Aggregate %s, total cost:%s ms.", 
+						topic_name, 
+						(t2 - t1));
+				}				
+
+				resolve();
+			})
+			.catch ((err) => {
+				if (err == "ER_TOPIC_NOT_EXIST"){
+					do_not_save_last_flag_ = true;
+					resolve();
+				}
+				else if (err == "ER_NO_DATA"){
+					resolve();
 				}
 				else
-					resolve();
-			});			
-		})
+					reject(err)	;			
+			});
+		});
 	}
 
 	this.onComplited = function (){

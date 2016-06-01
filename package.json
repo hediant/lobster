@@ -36,7 +36,8 @@
     "lru-cache":"4.0.1",
     "http-status-codes":"1.0.6",
     "co":"4.6.0",
-    "cron":"1.1.0"
+    "cron":"1.1.0",
+    "mongodb":"2.1.21"
   },
   "engines": {
     "node": ">= 0.10.0"
