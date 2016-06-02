@@ -2,17 +2,17 @@
 
 cd `dirname $0`
 
-APPJSON=`cat lobster.json`
+APPJSON='lobster.json'
 
 case "$1" in
   start)
-    echo $APPJSON | pm2 start -
+    pm2 start $APPJSON
     ;;
   stop)
-    echo $APPJSON | pm2 stop -
+    pm2 stop $APPJSON
     ;;
   restart)
-    echo $APPJSON | pm2 restart -
+    pm2 restart $APPJSON
     ;;
   *)
   echo "Usage: sbin/lobster.sh {start|stop|restart}"
