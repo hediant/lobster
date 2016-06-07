@@ -34,6 +34,8 @@ describe("readRaw 1", function(){
 		readRaw(start, end, undefined, function (err, data){
 			assert(!err);
 			console.log(moment(data[tag1][0][0]).format("YYYY-MM-DD HH:mm:ss"));
+			console.log(moment(data[tag1][2][0]).format("YYYY-MM-DD HH:mm:ss"));
+			console.log(moment(data[tag1][3][0]).format("YYYY-MM-DD HH:mm:ss"));			
 			done();
 		})
 	});

@@ -179,7 +179,7 @@ function doWrite (){
 			}
 
 			if (atags.fast.indexOf(tag_name) != -1){
-				fast.push([tag_name, (Math.random()*1000000).toFixed(2)])
+				fast.push([tag_name, Number((Math.random()*1000000).toFixed(2))])
 			}
 		}
 		
@@ -189,7 +189,7 @@ function doWrite (){
 			}
 
 			if (atags.slow.indexOf(tag_name) != -1){
-				slow.push([tag_name, (Math.random()*1000000).toFixed(2)])
+				slow.push([tag_name, Number((Math.random()*1000000).toFixed(2))])
 			}
 		}
 
@@ -199,7 +199,7 @@ function doWrite (){
 			}
 
 			if (atags.very_slow.indexOf(tag_name) != -1){
-				very_slow.push([tag_name, (Math.random()*1000000).toFixed(2)])
+				very_slow.push([tag_name, Number((Math.random()*1000000).toFixed(2))])
 			}
 		}		
 	});

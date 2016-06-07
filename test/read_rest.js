@@ -8,7 +8,11 @@ var tag2 = "tag2";
 
 var field_names = [tag1, tag2, "NOT_EXISTS"];
 
-var client = new Client();
+var client = new Client({
+	"duplicates" : [
+		"http://localhost:8002"
+	]
+});
 
 var calcRecords_ = function (data){
 	var count = 0;
@@ -34,8 +38,9 @@ var readRaw = function (start, end, options, cb){
 
 	client.readRaw(topic_name, query, function (err, data){
 		var t2 = Date.now();
-		if (err)
+		if (err){
 			console.log("Read %s error: %s.", topic_name, err ? (err.message ? err.message : err.code) : null);
+		}
 		else {
 			console.log("Read %s, %s fields, cost:%s ms.", topic_name, Object.keys(data).length, (t2 - t1));		
 		}
