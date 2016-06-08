@@ -8,7 +8,7 @@
 		"multipleStatements" : true 		
 	},
 	"mongodb" : {
-		"url" : "mongodb://localhost:27017/lobster?autoReconnect=false"
+		"url" : "mongodb://localhost:27017/lobster"
 	},
 	"port" :  8001,
 	"dup_read_port" : 8002,
