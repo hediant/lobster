@@ -81,7 +81,10 @@ function Writer(client){
 	var me = this;
 	var client_ = client;
 	var queue_ = [];
-	var max_queue_len_ = 100;
+	var max_queue_len_ = 500;
+	var max_data_count_ = 100 * max_queue_len_;
+
+	var data_count_ = 0;
 	var timer_ = null;
 	var commit_cycle_ = 5 * 1000;
 
@@ -120,9 +123,11 @@ function Writer(client){
 			"ts" : timestamp
 		});
 
-		if (queue_.length >= max_queue_len_){
+		data_count_ += Object.keys(data).length;
+		if (queue_.length >= max_queue_len_ || data_count_ >= max_data_count_){
 			commit_(queue_);
 			queue_ = [];
+			data_count_ = 0;
 		}
 	}
 
