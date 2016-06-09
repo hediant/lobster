@@ -41,20 +41,30 @@ function AggrJob(topic_name){
 	this.doWork = function (){
 		return Q.Promise((resolve, reject) => {
 			co(function *(){
-				var t1 = Date.now();
+				var t1 = t2 = t3 = 0;
+				var showProgress = function (){
+					if (config.debug){
+						console.log("Aggregate %s ms, write:%s ms, total:%s ms.", 
+							(t2 - t1), 
+							(t3 - t2),
+							(t3 - t1));
+					}
+				}
+
+				if (start_ == end_){
+					showProgress();
+					return resolve();
+				}
+
+				t1 = Date.now();
 				var aggr = yield Aggregation(topic_name, start_, end_);
 
-				var t2 = Date.now();
+				t2 = Date.now();
 				var writer = new AggrWriter(topic_name);
 				yield writer.save(aggr);
 
-				var t3 = Date.now();
-				if (config.debug){
-					console.log("Aggregate %s ms, write:%s ms, total:%s ms.", 
-						(t2 - t1), 
-						(t3 - t2),
-						(t3 - t1));
-				}				
+				t3 = Date.now();
+				showProgress();
 
 				resolve();
 			})
