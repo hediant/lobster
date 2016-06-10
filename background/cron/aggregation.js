@@ -57,11 +57,11 @@ var doAggregateJob = function (){
 			progress ++;
 		}
 
-		if (progress % Math.floor(jobs.length / 100) == 0){
+		if (progress % Math.floor(jobs.length / 1000) == 0){
 			console.log("===============================================");
 			console.log("[%s] Total progress: %s\%", 
 				moment().format("YYYY-MM-DD HH:mm:ss"),
-				Math.floor(progress/jobs.length * 100));
+				(progress/jobs.length * 100).toFixed(1));
 			console.log("===============================================");
 		}
 	});
