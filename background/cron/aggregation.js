@@ -11,6 +11,11 @@ var is_running = false;
 
 var doAggregateJob = function (){
 	if (is_running){
+		console.log("===============================================");
+		console.log("** %s **", moment().format("YYYY-MM-DD HH:mm:ss"));
+		console.log("* Last task has not completed, set next job.");
+		console.log("===============================================");
+
 		next = doAggregateJob;
 		return;
 	}

@@ -24,6 +24,6 @@
 		"max_retry_times" : 3
 	},
 	"time_zone" : "Asia/Beijing",
-	"debug" : true,
+	"debug" : false,
 	"diagnosis" : true
 }
