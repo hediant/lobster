@@ -9,19 +9,7 @@ var Scheduler = require('../scheduler')
 var next = null;
 var is_running = false;
 
-var doAggregateJob = function (){
-	if (is_running){
-		console.log("===============================================");
-		console.log("** %s **", moment().format("YYYY-MM-DD HH:mm:ss"));
-		console.log("* Last task has not completed, set next job.");
-		console.log("===============================================");
-
-		next = doAggregateJob;
-		return;
-	}
-	
-	next = null;
-
+var doAggregateJob = function (cb){
 	var jobs = Job.fetch();
 	var queue = new Queue();
 	jobs.forEach(function (job){
@@ -33,16 +21,13 @@ var doAggregateJob = function (){
 
 	var sdlr = new Scheduler(queue);
 	sdlr.on('completed', function (){
-		is_running = false;
-		if (next){
-			setImmediate(next);
-		}
-
 		var end = Date.now();
 		console.log("===============================================");
 		console.log("All task completed! cost:%s.", moment.duration((end - start)).humanize());
 		console.log("** %s **", moment().format("YYYY-MM-DD HH:mm:ss"));
 		console.log("");
+
+		cb && cb();
 	});
 
 	sdlr.on('job', function (job, state){
@@ -75,12 +60,32 @@ var cronJob = new CronJob({
 
 	//	To do aggregation job
 	"onTick" : function (){
-		console.log("============================================");
-		console.log("** Begin Aggregation Jobs ");
-		console.log("** %s", moment().format("YYYY-MM-DD HH:mm:ss"));
-		console.log("============================================");
+		if (is_running){
+			console.log("===============================================");
+			console.log("** %s **", moment().format("YYYY-MM-DD HH:mm:ss"));
+			console.log("* Last task has not completed, set next job.");
+			console.log("===============================================");
 
-		doAggregateJob();
+			next = doAggregateJob_;
+			return;
+		}
+
+		next = null;
+		var doAggregateJob_ = function (){
+			console.log("============================================");
+			console.log("** Begin Aggregation Jobs ");
+			console.log("** %s", moment().format("YYYY-MM-DD HH:mm:ss"));
+			console.log("============================================");
+					
+			doAggregateJob(function (){
+				is_running = false;
+				if (next){
+					setImmediate(next);
+				}			
+			});			
+		}
+
+		doAggregateJob_();
 	},
 
 	// Start the job right now
