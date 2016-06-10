@@ -43,8 +43,10 @@ function AggrJob(topic_name){
 			co(function *(){
 				var t1 = t2 = t3 = 0;
 				var showProgress = function (){
-					console.log("Aggregate %s, calc:%s ms, write:%s ms, total:%s ms.", 
+					console.log("Aggregate %s, [%s,%s), calc:%s ms, write:%s ms, total:%s ms.", 
 						topic_name,
+						moment(start_).format('YYMMDD'),
+						moment(end_).format('YYMMDD'),
 						(t2 - t1), 
 						(t3 - t2),
 						(t3 - t1));
