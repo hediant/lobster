@@ -31,12 +31,10 @@ var doAggregateJob = function (cb){
 	});
 
 	sdlr.on('job', function (job, state){
-		if (config.debug){
-			console.log("[%s] Aggregate %s, state:%s.", 
-				moment().format("YYYY-MM-DD HH:mm:ss"), 
-				job.getName(), 
-				state);
-		}
+		console.log("[%s] Aggregate %s, state:%s.", 
+			moment().format("YYYY-MM-DD HH:mm:ss"), 
+			job.getName(), 
+			state);
 
 		if (state == "finish"){
 			progress ++;
@@ -76,7 +74,7 @@ var cronJob = new CronJob({
 			console.log("** Begin Aggregation Jobs ");
 			console.log("** %s", moment().format("YYYY-MM-DD HH:mm:ss"));
 			console.log("============================================");
-					
+
 			doAggregateJob(function (){
 				is_running = false;
 				if (next){
