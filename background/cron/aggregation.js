@@ -57,7 +57,7 @@ var doAggregateJob = function (){
 			progress ++;
 		}
 
-		if (progress % Math.floor(jobs.length / 1000) == 0){
+		if (progress % 100 == 0){
 			console.log("===============================================");
 			console.log("[%s] Total progress: %s\%", 
 				moment().format("YYYY-MM-DD HH:mm:ss"),
