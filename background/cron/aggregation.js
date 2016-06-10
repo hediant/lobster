@@ -6,7 +6,17 @@ var Scheduler = require('../scheduler')
 	, config = require('../../config.json')
 	, CronJob = require('cron').CronJob;
 
+var next = null;
+var is_running = false;
+
 var doAggregateJob = function (){
+	if (is_running){
+		next = doAggregateJob;
+		return;
+	}
+	
+	next = null;
+
 	var jobs = Job.fetch();
 	var queue = new Queue();
 	jobs.forEach(function (job){
@@ -18,6 +28,11 @@ var doAggregateJob = function (){
 
 	var sdlr = new Scheduler(queue);
 	sdlr.on('completed', function (){
+		is_running = false;
+		if (next){
+			setImmediate(next);
+		}
+
 		var end = Date.now();
 		console.log("===============================================");
 		console.log("All task completed! cost:%s.", moment.duration((end - start)).humanize());
