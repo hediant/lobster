@@ -26,7 +26,7 @@
 			"out_file" : "/dev/null", 
 			"max_restarts" : 10,
 			"max_memory_restart" : "2G",
-			"instances" : 2,
+			"instances" : 4,
 			"node_args" : "--harmony",
 			"env": {
 				"NODE_ENV": "development",
