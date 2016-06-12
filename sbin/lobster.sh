@@ -4,6 +4,8 @@ cd `dirname $0`
 
 APPJSON='lobster.json'
 
+ulimit -n 1000000
+
 case "$1" in
   start)
     pm2 start $APPJSON
