@@ -1,6 +1,8 @@
 create database if not exists lobster;
 use lobster;
 
+SET GLOBAL event_scheduler = 1;
+
 --
 --
 -- table of updates
