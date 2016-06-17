@@ -1,125 +1,77 @@
 var PSON = require("pson");
-var csv = require('csv-parser');
-var fs = require('fs');
-var config = require('../config.json');
-var Long = require('long');
+var pson = new PSON.StaticPair();
 
-var file = "/home/lobster/data/system_1/3/20160516.0.log";
+var tag_count = 200;
+var system_count = 10000;
 
-var rows = [];
-
-var t1 = Date.now(), t2;
-
-fs.createReadStream(file)
-.pipe(csv({
-	"separator" : config.separator
-}))
-.on('data', function (data){
+var generate = function (){
 	var ret = {};
-	for (var key in data){
-		ret[key] = Number(data[key]);
+	for (var i=0; i<tag_count; i++){
+		ret['tag_'+ (i+1).toString()] = Math.floor(Math.random()*1000000);
 	}
 
-	rows.push(ret);
-})
-.on('end', function (){
-	t2 = Date.now();
-	console.log("Load CSV File, 2MB, cost:%s ms.", (t2 - t1));
+	return ret;
+}
 
-	console.log("");
-	var pson = new PSON.ProgressivePair();
-	t1 = Date.now();
-	var chunk = pson.encode(rows);
-	t2 = Date.now();
-	console.log("Serialize object, size:%s MB, cost:%s ms.", Math.round(chunk.buffer.length / (1024 * 1024)) , (t2 - t1));
-	console.log(chunk);
+var testJSONEncoding = function (){
+	var data = generate();
+	var t1 = Date.now();
+	for (var i=0; i<system_count; i++){
+		JSON.stringify(data);
+	}
+	var t2 = Date.now();
+	return t2 -t1;
+}
 
-	console.log("");
-	t1 = Date.now();
-	var data = pson.decode(chunk.buffer);
-	t2 = Date.now();
-	console.log("Deserialize %s MB chunk, cost:%s ms.", Math.round(chunk.buffer.length / (1024 * 1024)), (t2 - t1));
-	console.log(data.length);
+var testJSONDencoding = function (){
+	var data = generate();
+	var encoded = JSON.stringify(data);
 
-	console.log("");
-	t1 = Date.now();
-	var events = [];
-	rows.forEach(function (row){
-		var ev = [];
-		for (var key in row){
-			ev.push(row[key])
-		}
-		events.push(ev);
-	});
-	t2 = Date.now();
-	console.log("Iterate %s events(200 fields per event), cost:%s ms.", events.length, (t2 - t1));
+	var t1 = Date.now();
+	for (var i=0; i<system_count; i++){
+		JSON.parse(encoded);
+	}
+	var t2 = Date.now();
+	return t2 - t1;
+}
 
-	console.log("");
-	pson = new PSON.ProgressivePair();
-	t1 = Date.now();
-	var context = pson.encode(events);
-	t2 = Date.now();
-	console.log("Serialize %s events (200 fields per event), cost: %s ms.", events.length, (t2 - t1));
-	console.log(context);
+var testPSONEncoding = function (){
+	var data = generate();
+	var t1 = Date.now();
+	for (var i=0; i<system_count; i++){
+		pson.encode(data);
+	}
+	var t2 = Date.now();
+	return t2 -t1;	
+}
 
-	console.log("");
-	t1 = Date.now();
-	decode_context = pson.decode(context);
-	t2 = Date.now();
-	console.log("Deserialize %s events (200 fields per event), size: %sMB, cost: %s ms.", 
-		events.length,
-		Math.round(context.buffer.length / (1024 * 1024)),
-		(t2 - t1));
-	//console.log(decode_context);	
+var testPSONDencoding = function (){
+	var data = generate();
+	var encoded = pson.encode(data).toBuffer();
 
-	var ck = [
-		0,
-		1,
-		"abc",
-		NaN,
-		undefined, 
-		{"x":1, "y":2}, 
-		null, 
-		null, 
-		new Date(), 
-		Date.now(),
-		Long.fromNumber(Date.now()),
-		Long.fromNumber(100)
-	];
+	var t1 = Date.now();
+	for (var i=0; i<system_count; i++){
+		pson.decode(encoded);
+	}
+	var t2 = Date.now();
+	return t2 - t1;
+}
 
-	console.log("");
-	console.log(ck);
-	var encode_ck = pson.encode(ck);
-	console.log(encode_ck);
-	var decode_ck = pson.decode(encode_ck.buffer);
-	console.log(decode_ck);
+var test = function (){
+	var json_encode = testJSONEncoding();
+	console.log("JSON encode: %s ms", json_encode);
 
+	var json_dencode = testJSONDencoding();
+	console.log("JSON dencode: %s ms", json_dencode);
 
-	console.log("");
-	t1 = Date.now();
-	var buf = [];
-	events.forEach(function (ev){
-		buf.push(pson.encode(ev).buffer);
-	});
-	t2 = Date.now();
-	console.log("Encape events(%s, %s), cost:%s ms.",
-		events.length,
-		events.length * 200,
-		(t2 - t1));
+	var pson_encode = testPSONEncoding();
+	console.log("PSON encode: %s ms", pson_encode);
 
-	console.log("");
-	t1 = Date.now();
-	var decode_events = new Array(buf.length);
-	buf.forEach(function (chunk, i){
-		decode_events[i] = pson.decode(chunk);
-	});
-	console.log(buf[0])
-	console.log(buf[1])
+	var pson_dencode = testPSONDencoding();
+	console.log("PSON dencode: %s ms", pson_dencode);	
 
-	t2 = Date.now();
-	console.log("Dencape events(%s, %s), cost:%s ms.",
-		decode_events.length,
-		decode_events.length * 200,
-		(t2 - t1));	
-	//console.log(decode_events[0]);
-})
+	console.log("PSON/JSON encode: %s", (json_encode/pson_encode).toFixed(2));
+	console.log("PSON/JSON dencode: %s", (json_dencode/pson_dencode).toFixed(2));
+}
+
+test();
