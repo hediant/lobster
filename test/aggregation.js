@@ -10,6 +10,6 @@ Aggregation(topic_name, 0, Date.now(), function (err, results){
 		(ed - st),
 		err);
 	if (results){
-		console.log(Object.keys(results));
+		console.log(results);
 	}
 });

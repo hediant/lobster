@@ -41,7 +41,8 @@
     "crc":"3.4.0",
     "long":"3.1.0",
     "bytebuffer":"5.0.1",
-    "buffer-indexof":"1.0.0"
+    "buffer-indexof":"1.0.0",
+    "murmurhash-js":"1.0.0"
   },
   "engines": {
     "node": ">= 0.10.0"
