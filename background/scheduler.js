@@ -27,11 +27,12 @@ function Scheduler(queue){
 		}
 
 		var parallel = 0;
-		var worker = queue.next();
-
 		var run_ = function (){
-			while(worker && parallel < config.aggregation.parallel_jobs){
-
+			while(queue.size() && parallel < config.aggregation.parallel_jobs){
+				/*
+					注意:
+					不要将parallel++放在while(queue.size() && ...)中, 因为我们需要确保parallel++的执行
+				*/
 				parallel++;
 				(function (the_worker){
 					co(function *(){
@@ -50,18 +51,17 @@ function Scheduler(queue){
 							me.emit('job', the_worker.getJob(), "finish");
 						}
 
-						if (worker){
-							if (--parallel == 0)
+						if (--parallel == 0){
+							if (queue.size()){
 								setImmediate(run_);
-						}
-						else{
-							me.emit('completed');
+							}
+							else{
+								me.emit('completed');
+							}
 						}
 					});
 
-				})(worker);
-
-				worker = queue.next();
+				})(queue.next());
 			}			
 		}
 
