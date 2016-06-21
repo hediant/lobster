@@ -32,9 +32,8 @@ function Scheduler(queue){
 		var run_ = function (){
 			while(worker && parallel < config.aggregation.parallel_jobs){
 
+				parallel++;
 				(function (the_worker){
-					parallel++;
-
 					co(function *(){
 						var state = yield me.doAJob(the_worker);
 						if (state != "ok"){
@@ -51,16 +50,13 @@ function Scheduler(queue){
 							me.emit('job', the_worker.getJob(), "finish");
 						}
 
-						if (--parallel == 0){
-							if (queue.size()){
+						if (worker){
+							if (--parallel == 0)
 								setImmediate(run_);
-							}
-							else{
-								me.emit('completed');
-							}
 						}
-
-						return;
+						else{
+							me.emit('completed');
+						}
 					});
 
 				})(worker);
