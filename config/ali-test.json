@@ -1,0 +1,29 @@
+{
+	"db_conn" : {
+		"host" : "rds34xf8im5vd64528cd.mysql.rds.aliyuncs.com",
+		"user" : "lobster_user",
+		"password" : "lobster",
+		"database" : "lobster",
+		"connectionLimit" : 1,
+		"multipleStatements" : true 		
+	},
+	"mongodb" : {
+		"url" : "mongodb://10.44.43.23:27017/lobster"
+	},
+	"port" :  8001,
+	"dup_read_port" : 8002,
+	"db_path" : "/home/lobster/data",
+	"regions" : 1000,
+	"max_write_buf" : 1000000,
+	"flush_cycle" : 300000,
+	"flush_water_level" : 800000,
+	"concurrent_write" : 10000,
+	"topic_cache" : 50000,
+	"aggregation" : {
+		"parallel_jobs" : 1,
+		"max_retry_times" : 3
+	},
+	"time_zone" : "Asia/Beijing",
+	"debug" : false,
+	"diagnosis" : true
+}
