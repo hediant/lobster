@@ -5,11 +5,12 @@ var config = require('../../config')
 	, Q = require('q')
 	, Aggregation = require('../../lib/aggregation')
 	, AggrWriter = require('../../lib/aggr_writer')
+	, Topic = require('../../lib/topic')
 	, co = require('co');
 
 function AggrJob(topic_name){
 	var me = this;
-	var aggr_path_ = path.join(config.db_path, topic_name, "aggregation");
+	var aggr_path_ = path.join(Topic.BasePath(topic_name), "aggregation");
 
 	var start_ = 0;
 	// beginning of current day
@@ -105,11 +106,16 @@ function AggrJob(topic_name){
 // @cb - function (err, tasks)
 //
 AggrJob.fetch = function (){
-	var topics = fs.readdirSync(config.db_path);
-	var tasks = new Array(topics.length);
+	var regions = fs.readdirSync(config.db_path);
+	var tasks = [];
 
-	topics.forEach(function (topic_name, idx){
-		tasks[idx] = new AggrJob(topic_name);
+	regions.forEach(function (region_idx){
+		var region_path = path.join(config.db_path, region_idx);
+		var topics = fs.readdirSync(region_path);
+
+		topics.forEach(function (topic_name){
+			tasks.push(new AggrJob(topic_name));
+		});
 	});
 
 	return tasks;
