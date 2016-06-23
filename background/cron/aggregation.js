@@ -44,7 +44,8 @@ var doCreateAggrIndexJobs = function (){
 
 		console.log("===============================================");
 		console.log("Begin create indexes");
-		console.log("");
+		console.log("** %s **", moment().format("YYYY-MM-DD HH:mm:ss"));
+		console.log("===============================================");
 
 		sdlr.run();		
 	})
