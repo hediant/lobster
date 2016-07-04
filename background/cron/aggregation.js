@@ -48,9 +48,6 @@ var doCreateAggrIndexJobs = function (){
 		console.log("===============================================");
 
 		sdlr.run();		
-	})
-	.catch ((err) => {
-		reject(err);
 	});
 }
 
@@ -96,9 +93,6 @@ var doAggregateJobs = function (){
 		});
 
 		sdlr.run();	
-	})
-	.catch ((err) => {
-		reject(err);
 	});
 }
 
